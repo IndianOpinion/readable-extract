@@ -157,8 +157,44 @@ final class RobotsTxt
         if (!str_contains($pattern, '*')) {
             return $anchored ? $path === $pattern : str_starts_with($path, $pattern);
         }
-        $regex = '#^' . str_replace('\*', '.*', preg_quote($pattern, '#')) . ($anchored ? '$' : '') . '#s';
-        return preg_match($regex, $path) === 1;
+        return self::wildcard($pattern, $path, $anchored);
+    }
+
+    /**
+     * Glob match where "*" is any run of bytes, without regex backtracking:
+     * the classic two-pointer walk that only ever resumes at the last star,
+     * so a hostile pattern such as "/*a*a*a...*b" costs at most
+     * O(pattern x path), never exponential, and never fails open on a
+     * PCRE backtrack limit. Unanchored patterns are prefix matches.
+     */
+    private static function wildcard(string $pattern, string $path, bool $anchored): bool
+    {
+        $p = 0;
+        $s = 0;
+        $plen = strlen($pattern);
+        $slen = strlen($path);
+        $star = -1;
+        $mark = 0;
+        while (true) {
+            if ($p === $plen) {
+                if (!$anchored || $s === $slen) {
+                    return true;
+                }
+            } elseif ($pattern[$p] === '*') {
+                $star = $p++;
+                $mark = $s;
+                continue;
+            } elseif ($s < $slen && $pattern[$p] === $path[$s]) {
+                $p++;
+                $s++;
+                continue;
+            }
+            if ($star < 0 || $mark >= $slen) {
+                return false;
+            }
+            $p = $star + 1;
+            $s = ++$mark;
+        }
     }
 
     private static function normalisePercent(string $s): string

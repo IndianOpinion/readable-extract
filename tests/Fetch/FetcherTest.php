@@ -472,6 +472,73 @@ final class FetcherTest extends TestCase
         self::assertSame('Bearer licensed-feed', $t->requests[1]->headers['Authorization']);
     }
 
+    public function testCase77AuthorizationNeverFollowsARedirectToAnotherOrigin(): void
+    {
+        $t = (new ScriptedTransport())
+            ->on(self::ROBOTS, new TransportResponse(404, [], ''))
+            ->on(self::PAGE, new TransportResponse(302, ['location' => 'https://cdn.other.example/story-1'], ''))
+            ->on('https://cdn.other.example/robots.txt', new TransportResponse(404, [], ''))
+            ->on('https://cdn.other.example/story-1', new TransportResponse(301, ['location' => 'http://www.daily.example/city/story-1b'], ''))
+            ->on('http://www.daily.example/robots.txt', new TransportResponse(404, [], ''))
+            ->on('http://www.daily.example/city/story-1b', $this->page());
+        (new HttpFetcher($this->options()->withAuthorization('Bearer licensed-feed'), $t))->fetch(self::PAGE);
+        $sent = [];
+        foreach ($t->requests as $r) {
+            $sent[$r->url] = $r->headers['Authorization'] ?? null;
+        }
+        self::assertSame('Bearer licensed-feed', $sent[self::PAGE]);
+        self::assertSame('Bearer licensed-feed', $sent[self::ROBOTS]);
+        self::assertNull($sent['https://cdn.other.example/story-1'], 'other host');
+        self::assertNull($sent['https://cdn.other.example/robots.txt'], 'other host robots.txt');
+        self::assertNull($sent['http://www.daily.example/city/story-1b'], 'https to http downgrade');
+    }
+
+    public function testCase75TotalTimeoutCoversEveryHop(): void
+    {
+        $inner = (new ScriptedTransport())
+            ->on(self::ROBOTS, new TransportResponse(404, [], ''))
+            ->on(self::PAGE, new TransportResponse(302, ['location' => 'https://www.daily.example/b'], ''))
+            ->on('https://www.daily.example/b', new TransportResponse(302, ['location' => 'https://www.daily.example/c'], ''))
+            ->on('https://www.daily.example/c', $this->page());
+        $slow = new class ($inner) implements \IndianOpinion\ReadableExtract\Fetch\Transport {
+            /** @var list<float> */
+            public array $budgets = [];
+
+            public function __construct(private ScriptedTransport $inner)
+            {
+            }
+
+            public function send(\IndianOpinion\ReadableExtract\Fetch\TransportRequest $request): TransportResponse
+            {
+                $this->budgets[] = $request->totalTimeout;
+                usleep(60000);
+                return $this->inner->send($request);
+            }
+        };
+        try {
+            (new HttpFetcher($this->options()->withTimeouts(0.05, 0.15), $slow))->fetch(self::PAGE);
+            self::fail('expected the total time limit');
+        } catch (NetworkException $e) {
+            self::assertStringContainsString('Total time limit', $e->getMessage());
+        }
+        self::assertLessThan(4, count($slow->budgets));
+        self::assertLessThan($slow->budgets[0], $slow->budgets[1], 'each hop gets only what is left');
+    }
+
+    public function testCase67HostileWildcardRuleIsMatchedWithoutBacktracking(): void
+    {
+        $robots = RobotsTxt::parse("User-agent: *\nDisallow: /" . str_repeat('*a', 40) . "*b\n");
+        $start = microtime(true);
+        self::assertFalse($robots->isAllowed('t', '/b' . str_repeat('a', 6000) . 'b'));
+        self::assertTrue($robots->isAllowed('t', '/b' . str_repeat('a', 6000) . 'c'));
+        self::assertLessThan(2.0, microtime(true) - $start);
+        $anchored = RobotsTxt::parse("User-agent: *\nDisallow: /*.php$\nDisallow: /x*y\n");
+        self::assertFalse($anchored->isAllowed('t', '/a/b.php'));
+        self::assertTrue($anchored->isAllowed('t', '/a/b.php?x=1'));
+        self::assertFalse($anchored->isAllowed('t', '/xy'));
+        self::assertTrue($anchored->isAllowed('t', '/x'));
+    }
+
     public function testCase78ToContextPassesCharsetAndRobots(): void
     {
         $html = "<html><head><title>Caf\xE9</title></head><body><article>" . str_repeat("<p>Caf\xE9 owners say the new rule is fair and workable for everyone in town.</p>", 8) . '</article></body></html>';

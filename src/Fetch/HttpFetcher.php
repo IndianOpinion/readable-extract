@@ -30,6 +30,8 @@ final class HttpFetcher implements Fetcher
     private RateLimitStore $limits;
     private Resolver $resolver;
     private Clock $clock;
+    /** Seconds spent in the transport during the current fetch(), across every hop and robots.txt read. */
+    private float $spent = 0.0;
     /** @var (\Closure(string, string, array<string, mixed>): void)|null */
     private ?\Closure $logger;
 
@@ -54,6 +56,8 @@ final class HttpFetcher implements Fetcher
     public function fetch(string $url): FetchedPage
     {
         Url::assertInput($url);
+        $authOrigin = $this->origin($url);
+        $this->spent = 0.0;
         $current = $url;
         $hops = [];
         $visited = [];
@@ -66,7 +70,7 @@ final class HttpFetcher implements Fetcher
             $visited[$current] = true;
             $this->checkNetwork($current);
             $host = (string) Url::host($current);
-            $robots = $this->robotsFor($current);
+            $robots = $this->robotsFor($current, $authOrigin);
             $target = $this->pathAndQuery($current);
             if (!$robots->isAllowed($this->options->productToken(), $target)) {
                 $this->log('info', 'robots.txt disallows', ['url' => $current, 'robots' => $robots->status]);
@@ -85,7 +89,7 @@ final class HttpFetcher implements Fetcher
                 $this->acquire($host, $interval);
                 $acquired[$host] = true;
             }
-            $response = $this->send($current, $this->options->bodyCap());
+            $response = $this->send($current, $this->options->bodyCap(), $authOrigin);
             $status = $response->status;
             $this->log('info', 'response', ['url' => $current, 'status' => $status, 'bytes' => strlen($response->body)]);
 
@@ -171,7 +175,7 @@ final class HttpFetcher implements Fetcher
         }
     }
 
-    private function robotsFor(string $url): RobotsTxt
+    private function robotsFor(string $url, string $authOrigin): RobotsTxt
     {
         $origin = $this->origin($url);
         $now = $this->clock->now();
@@ -188,7 +192,7 @@ final class HttpFetcher implements Fetcher
                 }
                 $seen[$robotsUrl] = true;
                 $this->checkNetwork($robotsUrl);
-                $r = $this->send($robotsUrl, RobotsTxt::MAX_BYTES);
+                $r = $this->send($robotsUrl, RobotsTxt::MAX_BYTES, $authOrigin);
                 if (in_array($r->status, self::REDIRECTS, true) && $r->header('location') !== null) {
                     $next = Url::resolve($robotsUrl, (string) $r->header('location'));
                     if ($next === null || !Url::isHttp($next)) {
@@ -239,22 +243,38 @@ final class HttpFetcher implements Fetcher
         throw new RateLimitedException($host, $retry, 'Next slot for ' . $host . ' opens at ' . $retry->format(DATE_ATOM));
     }
 
-    private function send(string $url, int $cap): TransportResponse
+    /**
+     * The Authorization header goes only to the origin (scheme, host and
+     * port) of the URL the caller asked for: a redirect to another host,
+     * or a downgrade from https to http, never carries the credential.
+     */
+    private function send(string $url, int $cap, string $authOrigin): TransportResponse
     {
         $headers = [
             'User-Agent' => $this->options->userAgent(),
             'Accept' => 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.1',
         ];
-        if ($this->options->authorization() !== null) {
+        if ($this->options->authorization() !== null && $this->origin($url) === $authOrigin) {
             $headers['Authorization'] = (string) $this->options->authorization();
         }
-        return $this->transport->send(new TransportRequest(
-            $url,
-            $headers,
-            $this->options->connectTimeout(),
-            $this->options->totalTimeout(),
-            $cap,
-        ));
+        // The total timeout covers the whole fetch, not each hop, so a chain
+        // of slow redirects cannot hold the caller for hops x timeout.
+        $left = $this->options->totalTimeout() - $this->spent;
+        if ($left < 0.001) {
+            throw new NetworkException('Total time limit of ' . $this->options->totalTimeout() . ' s reached before ' . $url);
+        }
+        $start = hrtime(true);
+        try {
+            return $this->transport->send(new TransportRequest(
+                $url,
+                $headers,
+                min($this->options->connectTimeout(), $left),
+                $left,
+                $cap,
+            ));
+        } finally {
+            $this->spent += (hrtime(true) - $start) / 1e9;
+        }
     }
 
     private function retryAt(?string $header): float
@@ -279,6 +299,9 @@ final class HttpFetcher implements Fetcher
         $scheme = strtolower((string) ($p['scheme'] ?? 'https'));
         $host = strtolower((string) ($p['host'] ?? ''));
         $port = $p['port'] ?? null;
+        if ($port === ($scheme === 'https' ? 443 : 80)) {
+            $port = null;
+        }
         return $scheme . '://' . $host . ($port !== null ? ':' . $port : '');
     }
 
