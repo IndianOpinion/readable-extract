@@ -176,4 +176,32 @@ final class BodyTest extends TestCase
             self::assertSame($a->wordCount, $b->wordCount);
         }
     }
+
+    /** @return array<string, array{0: string}> */
+    public static function commentThreads(): array
+    {
+        $comment = '<p>I agree with this report, honestly, and I think the ward should have acted years ago, because every year we see the same flooding, the same excuses, and the same promises.</p>';
+        return [
+            'flat thread outscoring the story' => ['<div id="comments" class="comments-area">' . str_repeat($comment, 25) . '</div>'],
+            'one long reply in a comment list' => ['<div class="comment-list"><div class="reply">' . str_repeat($comment, 6) . '</div></div>'],
+            'nested thread' => ['<section id="comments"><ol class="thread">' . str_repeat('<li><div class="text">' . $comment . '</div></li>', 25) . '</ol></section>'],
+        ];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('commentThreads')]
+    public function testCase22CommentThreadNeverWinsOrJoinsTheBody(string $thread): void
+    {
+        $story = str_repeat('<p>The city council approved the new drainage plan on Monday, after months of debate, and officials said work would begin before the monsoon returns.</p>', 4);
+        $html = Page::html('<main><div class="story"><h1>Drainage plan</h1>' . $story . '</div>' . $thread . '</main>');
+        $a = (new Extractor())->extract($html, Page::URL);
+        self::assertStringContainsString('drainage plan on Monday', $a->bodyText);
+        self::assertStringNotContainsString('I agree with this report', $a->bodyText);
+    }
+
+    public function testCase22ArticleInsideANegativeWrapperStillScores(): void
+    {
+        $html = Page::html('<div class="layout-with-sidebar"><article><h1>Story</h1>' . Page::prose(900) . '</article></div>');
+        $a = (new Extractor())->extract($html, Page::URL);
+        self::assertGreaterThan(800, strlen($a->bodyText));
+    }
 }

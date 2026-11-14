@@ -120,29 +120,12 @@ final class Body
      */
     public function score(\DOMElement $body, ?Trace $trace): array
     {
-        /** @var array<int, float> $scores */
-        $scores = [];
-        /** @var array<int, \DOMElement> $elements */
-        $elements = [];
-        foreach (Dom::all($body) as $el) {
-            if (!$this->isParagraph($el)) {
-                continue;
-            }
-            $text = Dom::text($el);
-            $len = Text::length($text);
-            if ($len < $this->w->get('paragraphMinChars')) {
-                continue;
-            }
-            $points = $this->paragraphScore($text, $len);
-            $parent = $el->parentNode;
-            if (!$parent instanceof \DOMElement) {
-                continue;
-            }
-            $this->addScore($scores, $elements, $parent, $points);
-            $gp = $parent->parentNode;
-            if ($gp instanceof \DOMElement && $parent !== $body) {
-                $this->addScore($scores, $elements, $gp, $points * $this->w->get('grandparentShare'));
-            }
+        // Paragraphs inside negative containers (comments, rails) are left
+        // out; when that leaves nothing, the walk runs again with them, so a
+        // page whose only text is a biography is still seen (and refused).
+        [$scores, $elements] = $this->gather($body, true);
+        if (!$this->anyPositive($scores, $elements)) {
+            [$scores, $elements] = $this->gather($body, false);
         }
         $top = null;
         $topScore = -INF;
@@ -505,6 +488,100 @@ final class Body
             $s += $this->w->get('hintWeight');
         }
         return $s + ($this->positive($el) - $this->negative($el)) * $this->w->get('hintWeight');
+    }
+
+    /**
+     * Paragraph scores credited to parents and grandparents (case 22).
+     *
+     * @return array{0: array<int, float>, 1: array<int, \DOMElement>}
+     */
+    private function gather(\DOMElement $body, bool $skipNegative): array
+    {
+        /** @var array<int, float> $scores */
+        $scores = [];
+        /** @var array<int, \DOMElement> $elements */
+        $elements = [];
+        /** @var array<int, bool> $excluded */
+        $excluded = [];
+        foreach (Dom::all($body) as $el) {
+            if (!$this->isParagraph($el)) {
+                continue;
+            }
+            if ($skipNegative && $this->insideNegativeContainer($el, $body, $excluded)) {
+                continue;
+            }
+            $text = Dom::text($el);
+            $len = Text::length($text);
+            if ($len < $this->w->get('paragraphMinChars')) {
+                continue;
+            }
+            $points = $this->paragraphScore($text, $len);
+            $parent = $el->parentNode;
+            if (!$parent instanceof \DOMElement) {
+                continue;
+            }
+            $this->addScore($scores, $elements, $parent, $points);
+            $gp = $parent->parentNode;
+            if ($gp instanceof \DOMElement && $parent !== $body) {
+                $this->addScore($scores, $elements, $gp, $points * $this->w->get('grandparentShare'));
+            }
+        }
+        return [$scores, $elements];
+    }
+
+    /**
+     * @param array<int, float>       $scores
+     * @param array<int, \DOMElement> $elements
+     */
+    private function anyPositive(array $scores, array $elements): bool
+    {
+        foreach ($scores as $id => $raw) {
+            if ($raw * (1.0 - Dom::linkDensity($elements[$id])) > 0.0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * True when an ancestor below body, and below the nearest article, main
+     * or articleBody element, is a negative container (comments, related,
+     * sidebar...): more negative than positive hints. Paragraphs there score nothing,
+     * so a long comment thread or rail cannot outscore a short article.
+     * Results are memoised per ancestor, so the walk stays linear.
+     *
+     * @param array<int, bool> $memo
+     */
+    private function insideNegativeContainer(\DOMElement $el, \DOMElement $body, array &$memo): bool
+    {
+        $chain = [];
+        $result = false;
+        for ($n = $el->parentNode; $n instanceof \DOMElement && $n !== $body; $n = $n->parentNode) {
+            $id = spl_object_id($n);
+            if (isset($memo[$id])) {
+                $result = $memo[$id];
+                break;
+            }
+            $chain[] = $id;
+            if ($this->isShield($n)) {
+                break;
+            }
+            if ($this->negative($n) > $this->positive($n)) {
+                $result = true;
+                break;
+            }
+        }
+        foreach ($chain as $id) {
+            $memo[$id] = $result;
+        }
+        return $result;
+    }
+
+    /** article, main and articleBody elements shield what they hold from wrappers further up. */
+    private function isShield(\DOMElement $el): bool
+    {
+        return in_array(Dom::name($el), ['article', 'main'], true)
+            || in_array('articlebody', preg_split('/\s+/', strtolower($el->getAttribute('itemprop'))) ?: [], true);
     }
 
     private function positive(\DOMElement $el): int
