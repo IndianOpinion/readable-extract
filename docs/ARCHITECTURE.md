@@ -117,6 +117,16 @@ at least 80 characters with link density under 0.25, or a shorter `p`
 with no links that ends in a sentence mark. Siblings with more negative
 than positive hints never join.
 
+Negative containers (review fix): a paragraph whose ancestors, up to the
+nearest `article`, `main` or `itemprop="articleBody"` element, include one
+with more negative than positive hints does not score at all. Before this
+rule a comment thread of 25 short comments, or one long reply, outscored a
+four-paragraph article, because the negative hint only lowered the
+container that held the paragraphs directly. The ancestor test is memoised
+per element, so the walk stays linear. When the rule leaves no container
+above zero, the walk runs again without it, so a page whose only text is
+an author biography is still found and refused (`biography_only`).
+
 Recorded result on the fixture suite: 56 of 56 fixtures pass, mean body F1
 1.0 (`fixtures/baseline.json`). The fixtures are synthetic and written
 alongside the extractor, so this is a guard against regressions, not a
@@ -278,6 +288,23 @@ and `host` can be null.
   that call does not take another, so `http` to `https` on one host works
   with the default zero wait budget.
 - `Retry-After` is capped at seven days.
+- robots.txt wildcards are matched by a two-pointer glob walk, not a
+  regex, so a hostile rule such as `/*a*a*a...*b` costs at most pattern
+  length times path length and cannot hit the PCRE backtrack limit (which
+  would have dropped the rule and failed open).
+- The `Authorization` header goes only to the origin (scheme, host, port)
+  of the URL passed to `fetch()`, robots.txt for that origin included.
+  A redirect to another host, or from https to http, drops it.
+- The total timeout is a budget for the whole `fetch()`: time spent in the
+  transport is summed across robots.txt reads and redirect hops, each
+  request gets only what is left, and a fetch that runs out raises
+  `NetworkException`. Rate-limit waits do not count against it.
+- A charset label that is a transfer or markup encoding in mbstring
+  (`base64`, `html-entities`, `qprint`, `uuencode`, `7bit`, `8bit`,
+  `pass`) or UTF-7 is ignored with `unknown_charset`: converting from
+  them would wipe the page or decode `&lt;script&gt;` into markup before
+  parsing. A meta tag declaring UTF-16 or UTF-32 is read as UTF-8, as
+  browsers do.
 - The user agent must contain a contact: `http://`, `https://`, `mailto:`
   or an `@`. The product token must be letters, `_` and `-` (RFC 9309).
 - When an honoured directive refuses the body (`none`, `noarchive`,
@@ -312,11 +339,14 @@ letters. No language detection is done.
 ### 20. Performance
 
 The PRD budget is 50 ms for a 300 KB page and 150 ms for 1 MB on a
-typical server core. Measured on the shared 2-core build box under load
-(load average 5 to 6): a realistic 300 KB page (scripts, styles, a large
-menu, a related rail and a 1,400-character article) took 32 to 60 ms; the
-1.2 MB fixture took 160 to 380 ms, about 70 ms of it in libxml parsing.
-Junk and hidden elements are removed with XPath so libxml walks the tree,
-and the hot paths use `textContent` rather than PHP tree walks. The 1 MB
-figure needs confirming on a quiet core; the full suite scores in under
-one second.
+typical server core. The builder first measured on the shared 2-core box
+under load (load average 5 to 6): 32 to 60 ms for a realistic 300 KB page
+and 160 to 380 ms for the 1.15 MB fixture. Re-measured at review on the
+same box at its quietest (2 cores, load average 0.3, PHP 8.3 with
+OPcache, 15 runs after a warm-up): the 1.15 MB fixture took 132 ms best,
+143 to 147 ms median, 170 ms worst, of which about 50 ms is libxml
+parsing; a 300 KB page took about 33 ms median; a 5.7 MB input peaked at
+61.5 MB of memory. The targets hold, so they are unchanged. Junk and
+hidden elements are removed with XPath so libxml walks the tree, and the
+hot paths use `textContent` rather than PHP tree walks. The full suite
+scores in under one second.

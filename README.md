@@ -134,13 +134,13 @@ All options are immutable `with*()` methods on `ExtractorOptions` and `FetchOpti
 | `withWaitBudget` | 0 s | How long `fetch()` may sleep for a slot |
 | `withDefaultBackoff` | 600 s | After 429 without `Retry-After` |
 | `withRobotsTtl` | 24 h | robots.txt cache lifetime |
-| `withTimeouts` | 5 s connect, 20 s total | |
+| `withTimeouts` | 5 s connect, 20 s total | The total covers the whole fetch, every hop included |
 | `withBodyCap` | 5 MB | The read stops there; warning `body_truncated` |
 | `withMaxRedirects` | 5 | 0 to 10, every hop checked |
 | `withAllowedPorts` | 80, 443 | |
 | `withAllowPrivateAddresses` | false | For tests against a local server only |
 | `withHonourRobotsMeta` | none, noarchive, nosnippet, noai, noimageai | You may add, not remove none or noarchive |
-| `withAuthorization` | none | Sent only when set, for a source you are licensed to fetch |
+| `withAuthorization` | none | Sent only when set, for a source you are licensed to fetch, and only to that URL's own origin (never across a redirect to another host or to http) |
 | `withResolver`, `withClock` | system DNS and clock | For tests |
 
 ## How it works
@@ -197,7 +197,7 @@ Today all 56 fixtures pass with mean body F1 1.0. The fixtures were written with
 - Pages that render their article in JavaScript are reported as `script_rendered`, not extracted.
 - Month names are supported in English, Hindi and Marathi. Other scripts' visible dates are read only in ISO or numeric form.
 - DNS is checked before each request, but curl resolves again when it connects. A host that changes its answer in that gap is not caught (decision 7).
-- Measured on a shared, loaded 2-core box: a realistic 300 KB page extracts in about 32 to 60 ms and the 1.2 MB fixture in about 160 to 380 ms, above the 150 ms target for 1 MB pages on a quiet core. Most of that time is libxml parsing.
+- Measured on PHP 8.3 on a quiet 2-core box (load average 0.3): a 300 KB page extracts in about 33 ms and the 1.15 MB fixture in about 143 to 147 ms (median), inside the 150 ms target; about 50 ms of that is libxml parsing. On a loaded box expect two to three times that.
 
 ## FAQ
 

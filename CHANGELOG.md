@@ -24,7 +24,8 @@ project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   names and Indic digits.
 - `HttpFetcher`: RFC 9309 robots.txt with no off switch, per-host rate
   limits, crawl delays, Retry-After, robots meta and header directives,
-  private address refusal on every hop, no cookies.
+  private address refusal on every hop, a total time limit across hops,
+  `Authorization` kept to the requested origin, no cookies.
 - Fixture suite of 56 synthetic pages across eleven languages, a scorer
   with text, JSON and Markdown reports, and a committed baseline.
 - `bin/readable-extract` with `extract`, `score`, `baseline` and
