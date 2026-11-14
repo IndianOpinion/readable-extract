@@ -482,23 +482,30 @@ Every numbered item below is a case. Section 12 has one test per case.
     `canonicalUrl`, `language`, and `bodyText` (or `bodyMustContain` and
     `bodyMustNotContain` lists). A field left out is not scored.
 80. `meta.json` records the URL the page stands for, the kind
-    (`synthetic` or `captured`), the outlet label, the pattern it
+    (`synthetic` or `captured`), a generic outlet label, the pattern it
     exercises, the date written or captured, and for captured pages the
-    terms page consulted, the date it was read and a one-line note of what
-    the terms allow.
+    date the outlet's terms were read and a one-line note of what they
+    allow. The URL always uses a reserved example host (82). The label
+    describes the kind of outlet, for example "regional daily, Hindi" or
+    "national wire agency", and never names a real outlet. The terms page
+    address is kept in the maintainer's own records, not in the repo,
+    because it would name the outlet.
 81. The suite is for extraction accuracy on saved pages. It is not a list
     of sites to fetch, and nothing in the repo fetches its URLs. The
     scorer and the tests run offline only.
 82. Synthetic fixtures are the default. The builder writes them by hand,
     reproducing structural patterns seen on Indian news sites (the
-    patterns in 4.3 to 4.9), with original placeholder text. They may use a
-    descriptive outlet label but use `example.in`, `example.com` and
-    similar reserved hosts.
+    patterns in 4.3 to 4.9), with original placeholder text. They use
+    `example.in`, `example.com` and similar reserved hosts, and a generic
+    outlet label (80).
 83. A captured fixture is allowed only where the outlet's published terms
     permit keeping a copy for this purpose. Article prose in a captured
     page is replaced with original or public-domain text of similar length
     and script before commit; markup, attributes and structure are kept.
-    Images are never committed; image URLs stay as text.
+    Hosts in links, image URLs and structured data are rewritten to
+    reserved example hosts, and the outlet's name, logo text and mastheads
+    are replaced with generic text. Images are never committed; image URLs
+    stay as text.
 84. The suite covers at least: each page type in 14; each body case in 21
     to 26; each image case in 31 to 38; each date form in 47 to 52;
     bylines with agencies and editors; AMP and canonical; pages in Hindi,
@@ -671,7 +678,7 @@ for the namespace. Nothing else is needed.
    caller is responsible for how it uses extracted text and that the
    library is not a licence to republish.
 9. Captured fixtures follow 83: terms checked and recorded, prose replaced,
-   no images committed.
+   no images committed, no outlet named.
 
 ## 9. Performance budget
 
@@ -844,9 +851,12 @@ a scripted transport and a stub DNS resolver.
     `extract()`.
 79. (79) A fixture without `bodyText` scores other fields only.
 80. (80) `meta.json` for a captured fixture without terms fields fails
-    validation.
+    validation, and so does one whose URL is not on a reserved example
+    host.
 81. (81) The scorer run with a transport that throws on any call passes.
-82. (82) Every synthetic fixture uses a reserved example host.
+82. (82) Every fixture, synthetic or captured, uses a reserved example
+    host in `meta.json` and in every absolute URL in `page.html`. A check
+    fails on any other host.
 83. (83) A repo check fails if any fixture directory contains an image
     file.
 84. (84) A coverage check lists each required pattern and language and
