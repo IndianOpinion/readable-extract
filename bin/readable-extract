@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$autoloaders = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+];
+$loaded = false;
+foreach ($autoloaders as $file) {
+    if (is_file($file)) {
+        require $file;
+        $loaded = true;
+        break;
+    }
+}
+if (!$loaded) {
+    require __DIR__ . '/../bootstrap.php';
+}
+
+$argv = $_SERVER['argv'] ?? [];
+array_shift($argv);
+exit((new IndianOpinion\ReadableExtract\Cli\Application())->run(array_values(array_map('strval', $argv))));
