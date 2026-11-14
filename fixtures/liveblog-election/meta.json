@@ -1,0 +1,12 @@
+{
+    "url": "https://live.national-daily.example/live/election-results-2026-11-14",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "liveblog with five updates in JSON-LD",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "liveblog",
+    "covers": [
+        "type:liveblog"
+    ]
+}

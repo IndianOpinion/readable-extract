@@ -1,0 +1,12 @@
+{
+    "url": "https://www.business-daily.example/markets/bond-yields-outlook-2026",
+    "kind": "synthetic",
+    "label": "business daily, English",
+    "pattern": "paywalled page with a teaser and hidden subscriber text",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "paywalled",
+    "covers": [
+        "type:paywalled"
+    ]
+}

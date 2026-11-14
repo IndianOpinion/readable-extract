@@ -1,0 +1,429 @@
+{
+    "note": "Written by tests/Fixtures/FixtureSuiteTest.php. Do not edit by hand; run the tests and commit the result.",
+    "fixtureCount": 56,
+    "required": [
+        "type:article",
+        "type:liveblog",
+        "type:video",
+        "type:gallery",
+        "type:index",
+        "type:paywalled",
+        "type:script_rendered",
+        "type:empty",
+        "type:unknown",
+        "body:structured-wins",
+        "body:biography-first",
+        "body:biography-only",
+        "body:disagreement",
+        "body:microdata",
+        "body:cleanup",
+        "body:danda",
+        "img:lazy",
+        "img:srcset",
+        "img:noscript",
+        "img:placeholder",
+        "img:placeholder-whole-name",
+        "img:furniture-attr",
+        "img:furniture-url",
+        "img:chrome",
+        "img:og-spacer",
+        "img:none",
+        "img:first-body",
+        "date:visible-dmy-ist",
+        "date:visible-mdy",
+        "date:visible-slash",
+        "date:visible-dash",
+        "date:hindi-month",
+        "date:relative",
+        "date:implausible",
+        "date:none",
+        "date:time-element",
+        "date:meta",
+        "byline:agency",
+        "byline:editor",
+        "byline:hindi",
+        "url:amp",
+        "url:canonical-home",
+        "lang:hi",
+        "lang:ta",
+        "lang:bn",
+        "lang:mr",
+        "lang:ml",
+        "lang:te",
+        "lang:kn",
+        "lang:gu",
+        "lang:pa",
+        "lang:ur",
+        "charset:windows-1252",
+        "charset:mismatch",
+        "size:over-1mb"
+    ],
+    "missing": [],
+    "byScript": {
+        "Arab": [
+            "lang-ur"
+        ],
+        "Beng": [
+            "lang-bn"
+        ],
+        "Deva": [
+            "body-microdata",
+            "byline-hindi",
+            "charset-mismatch-hindi",
+            "date-hindi-month",
+            "gallery-web-story",
+            "lang-hi",
+            "lang-mr",
+            "language-mismatch"
+        ],
+        "Gujr": [
+            "lang-gu"
+        ],
+        "Guru": [
+            "lang-pa"
+        ],
+        "Knda": [
+            "lang-kn"
+        ],
+        "Latn": [
+            "amp-canonical",
+            "article-basic-en",
+            "body-biography-first",
+            "body-biography-only",
+            "body-cleanup",
+            "body-disagreement",
+            "body-div-br",
+            "body-jsonld-short-visible",
+            "byline-agency",
+            "byline-editor",
+            "canonical-home-ignored",
+            "charset-windows-1252",
+            "date-implausible",
+            "date-meta-tags",
+            "date-none",
+            "date-relative",
+            "date-time-element",
+            "date-visible-dash",
+            "date-visible-ist",
+            "date-visible-mdy",
+            "date-visible-slash",
+            "gallery-photos",
+            "img-furniture-only",
+            "img-lazy-data-src",
+            "img-noscript",
+            "img-og-spacer",
+            "img-photo-named-pixel",
+            "img-srcset-density",
+            "img-url-size",
+            "index-section-front",
+            "index-tag-path",
+            "large-page",
+            "liveblog-election",
+            "paywalled-teaser",
+            "script-rendered-shell",
+            "sponsored-label",
+            "unknown-notice",
+            "video-path-hint",
+            "video-playlist"
+        ],
+        "Mlym": [
+            "lang-ml"
+        ],
+        "Taml": [
+            "lang-ta"
+        ],
+        "Telu": [
+            "lang-te"
+        ],
+        "Zyyy": [
+            "empty-page"
+        ]
+    },
+    "byLayout": {
+        "article": [
+            "amp-canonical",
+            "article-basic-en",
+            "body-biography-first",
+            "body-biography-only",
+            "body-cleanup",
+            "body-disagreement",
+            "body-div-br",
+            "body-jsonld-short-visible",
+            "body-microdata",
+            "byline-agency",
+            "byline-editor",
+            "byline-hindi",
+            "canonical-home-ignored",
+            "charset-mismatch-hindi",
+            "charset-windows-1252",
+            "date-hindi-month",
+            "date-implausible",
+            "date-meta-tags",
+            "date-none",
+            "date-relative",
+            "date-time-element",
+            "date-visible-dash",
+            "date-visible-ist",
+            "date-visible-mdy",
+            "date-visible-slash",
+            "img-furniture-only",
+            "img-lazy-data-src",
+            "img-noscript",
+            "img-og-spacer",
+            "img-photo-named-pixel",
+            "img-srcset-density",
+            "img-url-size",
+            "lang-bn",
+            "lang-gu",
+            "lang-hi",
+            "lang-kn",
+            "lang-ml",
+            "lang-mr",
+            "lang-pa",
+            "lang-ta",
+            "lang-te",
+            "lang-ur",
+            "language-mismatch",
+            "large-page",
+            "sponsored-label"
+        ],
+        "empty": [
+            "empty-page"
+        ],
+        "gallery": [
+            "gallery-photos",
+            "gallery-web-story"
+        ],
+        "index": [
+            "index-section-front",
+            "index-tag-path"
+        ],
+        "liveblog": [
+            "liveblog-election"
+        ],
+        "paywalled": [
+            "paywalled-teaser"
+        ],
+        "script_rendered": [
+            "script-rendered-shell"
+        ],
+        "unknown": [
+            "unknown-notice"
+        ],
+        "video": [
+            "video-path-hint",
+            "video-playlist"
+        ]
+    },
+    "covers": {
+        "body:biography-first": [
+            "body-biography-first"
+        ],
+        "body:biography-only": [
+            "body-biography-only"
+        ],
+        "body:cleanup": [
+            "body-cleanup"
+        ],
+        "body:danda": [
+            "body-microdata"
+        ],
+        "body:disagreement": [
+            "body-disagreement"
+        ],
+        "body:div-br": [
+            "body-div-br"
+        ],
+        "body:embed": [
+            "body-cleanup"
+        ],
+        "body:json-ld": [
+            "body-jsonld-short-visible"
+        ],
+        "body:microdata": [
+            "body-microdata"
+        ],
+        "body:structured-wins": [
+            "body-jsonld-short-visible"
+        ],
+        "byline:agency": [
+            "byline-agency"
+        ],
+        "byline:editor": [
+            "byline-editor"
+        ],
+        "byline:hindi": [
+            "byline-hindi"
+        ],
+        "charset:mismatch": [
+            "charset-mismatch-hindi"
+        ],
+        "charset:windows-1252": [
+            "charset-windows-1252"
+        ],
+        "date:hindi-month": [
+            "date-hindi-month"
+        ],
+        "date:implausible": [
+            "date-implausible"
+        ],
+        "date:meta": [
+            "date-meta-tags"
+        ],
+        "date:modified": [
+            "date-time-element"
+        ],
+        "date:none": [
+            "date-none",
+            "index-section-front"
+        ],
+        "date:relative": [
+            "date-relative"
+        ],
+        "date:time-element": [
+            "date-time-element"
+        ],
+        "date:visible-dash": [
+            "date-visible-dash"
+        ],
+        "date:visible-dmy-ist": [
+            "date-visible-ist"
+        ],
+        "date:visible-mdy": [
+            "date-visible-mdy"
+        ],
+        "date:visible-slash": [
+            "date-visible-slash"
+        ],
+        "img:chrome": [
+            "img-furniture-only"
+        ],
+        "img:first-body": [
+            "img-lazy-data-src"
+        ],
+        "img:furniture-attr": [
+            "img-furniture-only"
+        ],
+        "img:furniture-url": [
+            "img-url-size"
+        ],
+        "img:json-ld-largest": [
+            "img-og-spacer"
+        ],
+        "img:lazy": [
+            "img-lazy-data-src"
+        ],
+        "img:none": [
+            "img-furniture-only"
+        ],
+        "img:noscript": [
+            "img-noscript"
+        ],
+        "img:og-spacer": [
+            "img-og-spacer"
+        ],
+        "img:placeholder": [
+            "img-lazy-data-src"
+        ],
+        "img:placeholder-whole-name": [
+            "img-photo-named-pixel"
+        ],
+        "img:srcset": [
+            "img-srcset-density"
+        ],
+        "lang:bn": [
+            "lang-bn"
+        ],
+        "lang:en": [
+            "article-basic-en"
+        ],
+        "lang:gu": [
+            "lang-gu"
+        ],
+        "lang:hi": [
+            "body-microdata",
+            "byline-hindi",
+            "charset-mismatch-hindi",
+            "date-hindi-month",
+            "gallery-web-story",
+            "lang-hi"
+        ],
+        "lang:kn": [
+            "lang-kn"
+        ],
+        "lang:mismatch": [
+            "language-mismatch"
+        ],
+        "lang:ml": [
+            "lang-ml"
+        ],
+        "lang:mr": [
+            "lang-mr"
+        ],
+        "lang:pa": [
+            "lang-pa"
+        ],
+        "lang:ta": [
+            "lang-ta"
+        ],
+        "lang:te": [
+            "lang-te"
+        ],
+        "lang:ur": [
+            "lang-ur"
+        ],
+        "path-hint": [
+            "gallery-web-story",
+            "index-tag-path",
+            "video-path-hint"
+        ],
+        "size:over-1mb": [
+            "large-page"
+        ],
+        "sponsored": [
+            "sponsored-label"
+        ],
+        "type:article": [
+            "article-basic-en"
+        ],
+        "type:empty": [
+            "empty-page"
+        ],
+        "type:gallery": [
+            "gallery-photos",
+            "gallery-web-story"
+        ],
+        "type:index": [
+            "index-section-front",
+            "index-tag-path"
+        ],
+        "type:liveblog": [
+            "liveblog-election"
+        ],
+        "type:paywalled": [
+            "paywalled-teaser"
+        ],
+        "type:script_rendered": [
+            "script-rendered-shell"
+        ],
+        "type:unknown": [
+            "unknown-notice"
+        ],
+        "type:video": [
+            "video-path-hint",
+            "video-playlist"
+        ],
+        "url:amp": [
+            "amp-canonical"
+        ],
+        "url:canonical-home": [
+            "canonical-home-ignored"
+        ],
+        "url:tracking": [
+            "amp-canonical"
+        ]
+    },
+    "unitTestedOnly": {
+        "type:wrapper": "tests/Unit/InputTest.php (case 5): a wrapper is known from its URL, and fixture URLs use reserved hosts only"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "url": "https://www.mr-daily.example/city/rain-pumps-2026-11-10-mr",
+    "kind": "synthetic",
+    "label": "regional daily, Marathi",
+    "pattern": "article in mr with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "article",
+    "covers": [
+        "lang:mr"
+    ]
+}

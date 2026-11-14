@@ -1,0 +1,13 @@
+{
+    "url": "https://www.date-site.example/news/time-element",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "time elements in the article header for published and updated",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:time-element",
+        "date:modified"
+    ]
+}

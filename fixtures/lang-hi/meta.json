@@ -1,0 +1,12 @@
+{
+    "url": "https://www.hi-daily.example/city/rain-pumps-2026-11-10-hi",
+    "kind": "synthetic",
+    "label": "regional daily, Hindi",
+    "pattern": "article in hi with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "article",
+    "covers": [
+        "lang:hi"
+    ]
+}

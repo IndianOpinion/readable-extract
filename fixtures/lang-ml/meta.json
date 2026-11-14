@@ -1,0 +1,12 @@
+{
+    "url": "https://www.ml-daily.example/city/rain-pumps-2026-11-10-ml",
+    "kind": "synthetic",
+    "label": "regional daily, Malayalam",
+    "pattern": "article in ml with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Mlym",
+    "layout": "article",
+    "covers": [
+        "lang:ml"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "url": "https://www.hi-daily.example/shahar/sadak-nirman",
+    "kind": "synthetic",
+    "label": "regional daily, Hindi",
+    "pattern": "visible date with a Hindi month name",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "article",
+    "covers": [
+        "date:hindi-month",
+        "lang:hi"
+    ]
+}

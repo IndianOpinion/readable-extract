@@ -1,0 +1,12 @@
+{
+    "url": "https://www.ta-daily.example/city/rain-pumps-2026-11-10-ta",
+    "kind": "synthetic",
+    "label": "regional daily, Tamil",
+    "pattern": "article in ta with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Taml",
+    "layout": "article",
+    "covers": [
+        "lang:ta"
+    ]
+}

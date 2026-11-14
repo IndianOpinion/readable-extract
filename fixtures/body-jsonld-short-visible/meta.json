@@ -1,0 +1,13 @@
+{
+    "url": "https://www.wire-site.example/state/assembly-session-ends",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "short visible body with the full text in JSON-LD articleBody",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "body:structured-wins",
+        "body:json-ld"
+    ]
+}

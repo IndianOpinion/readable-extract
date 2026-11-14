@@ -1,0 +1,12 @@
+{
+    "url": "https://www.old-portal.example/city/cafe-plastic-rule",
+    "kind": "synthetic",
+    "label": "older news portal, English",
+    "pattern": "windows-1252 page with curly quotes and accented letters",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "charset:windows-1252"
+    ]
+}

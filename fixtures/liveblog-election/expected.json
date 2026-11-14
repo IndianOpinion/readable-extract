@@ -1,0 +1,16 @@
+{
+    "pageType": "liveblog",
+    "title": "Live: counting day in the state assembly election",
+    "authors": [
+        "Live Desk"
+    ],
+    "publishedAt": "2026-11-14T02:00:00Z",
+    "modifiedAt": "2026-11-14T04:50:00Z",
+    "leadImage": "https://img.live.national-daily.example/live/counting-centre-wide.jpg",
+    "canonicalUrl": "https://live.national-daily.example/live/election-results-2026-11-14",
+    "language": "en",
+    "bodyMustContain": [
+        "Counting began at eight in the morning at all forty centres across the state, officials said.",
+        "Results for the first twelve seats are expected before noon, the chief electoral officer told reporters at the press room."
+    ]
+}

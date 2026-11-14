@@ -1,0 +1,12 @@
+{
+    "url": "https://www.city-paper.example/city/bus-depot-plan",
+    "kind": "synthetic",
+    "label": "city paper, English",
+    "pattern": "author biography first in the markup, real text in JSON-LD",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "body:biography-first"
+    ]
+}

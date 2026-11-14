@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/date-visible-dash",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "visible date only: \"Published On: 14-11-2026 10:30\"",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:visible-dash"
+    ]
+}

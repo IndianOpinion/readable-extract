@@ -1,0 +1,13 @@
+{
+    "url": "https://www.coast-news.example/coast/ferry-service-resumes",
+    "kind": "synthetic",
+    "label": "coastal news portal, English",
+    "pattern": "also-read links, newsletter box, share bar, related list, ad slot, poll, embedded post and repeated headline inside the body",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "body:cleanup",
+        "body:embed"
+    ]
+}

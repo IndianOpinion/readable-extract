@@ -1,0 +1,12 @@
+{
+    "url": "https://www.gu-daily.example/city/rain-pumps-2026-11-10-gu",
+    "kind": "synthetic",
+    "label": "regional daily, Gujarati",
+    "pattern": "article in gu with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Gujr",
+    "layout": "article",
+    "covers": [
+        "lang:gu"
+    ]
+}

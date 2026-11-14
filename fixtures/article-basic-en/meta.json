@@ -1,0 +1,13 @@
+{
+    "url": "https://www.national-daily.example/cities/council-drainage-plan-2026-11-10",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "plain article: JSON-LD, og tags, byline, time element, nav, sidebar and footer",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "type:article",
+        "lang:en"
+    ]
+}

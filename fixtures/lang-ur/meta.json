@@ -1,0 +1,12 @@
+{
+    "url": "https://www.ur-daily.example/city/rain-pumps-2026-11-10-ur",
+    "kind": "synthetic",
+    "label": "regional daily, Urdu",
+    "pattern": "article in ur with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Arab",
+    "layout": "article",
+    "covers": [
+        "lang:ur"
+    ]
+}

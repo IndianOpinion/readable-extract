@@ -1,0 +1,14 @@
+{
+    "url": "https://www.img-site.example/cities/furniture-only-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "only logos, icons, spacers and a tiny tagged image",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:none",
+        "img:furniture-attr",
+        "img:chrome"
+    ]
+}

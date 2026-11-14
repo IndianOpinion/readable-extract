@@ -1,0 +1,12 @@
+{
+    "url": "https://www.wire-site.example/nation/editor-credit",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "two authors and an editor credit in one byline",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "byline:editor"
+    ]
+}

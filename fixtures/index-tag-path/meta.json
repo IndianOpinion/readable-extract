@@ -1,0 +1,13 @@
+{
+    "url": "https://www.national-daily.example/tag/monsoon",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "tag page known by its /tag/ path",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "index",
+    "covers": [
+        "type:index",
+        "path-hint"
+    ]
+}

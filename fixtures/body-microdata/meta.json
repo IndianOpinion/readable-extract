@@ -1,0 +1,14 @@
+{
+    "url": "https://www.hi-daily.example/desh/khabar-1001",
+    "kind": "synthetic",
+    "label": "regional daily, Hindi",
+    "pattern": "body marked with itemprop articleBody, danda-heavy Hindi prose",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "article",
+    "covers": [
+        "body:microdata",
+        "body:danda",
+        "lang:hi"
+    ]
+}
