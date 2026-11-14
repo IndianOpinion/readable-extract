@@ -120,6 +120,28 @@ final class InputTest extends TestCase
         self::assertSame(2, $a->trace?->notes()['invalid_sequences'] ?? null);
     }
 
+    /** @return array<string, array{0: string}> */
+    public static function pseudoCharsets(): array
+    {
+        return [['base64'], ['html-entities'], ['utf-7'], ['uuencode'], ['qprint']];
+    }
+
+    #[\PHPUnit\Framework\Attributes\DataProvider('pseudoCharsets')]
+    public function testCase6TransferEncodingsAreNotTreatedAsCharsets(string $charset): void
+    {
+        $html = '<html><body><p>Ward office notes say &lt;script&gt; tags are text, and the council agrees.</p></body></html>';
+        $a = (new Extractor())->extract($html, Page::URL, new PageContext(contentType: 'text/html; charset=' . $charset));
+        self::assertSame('Ward office notes say <script> tags are text, and the council agrees.', $a->bodyText);
+        self::assertTrue($a->hasWarning(Warning::UnknownCharset));
+    }
+
+    public function testCase6MetaDeclaredUtf16IsReadAsUtf8(): void
+    {
+        $html = '<html><head><meta charset="utf-16"></head><body><p>Ward office reopens after the repairs are done.</p></body></html>';
+        $a = (new Extractor())->extract($html, Page::URL);
+        self::assertSame('Ward office reopens after the repairs are done.', $a->bodyText);
+    }
+
     public function testCase7Utf8DeclaredAsLatinIsReadAsUtf8(): void
     {
         $html = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head><body><p>नगर निगम का नया दफ़्तर खुला।</p></body></html>';

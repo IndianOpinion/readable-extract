@@ -23,6 +23,18 @@ final class Charset
     private const LATIN = ['windows-1252', 'iso-8859-1', 'latin1', 'us-ascii', 'ascii', 'cp1252', 'iso8859-1', 'l1'];
 
     /**
+     * mbstring names that are transfer or markup encodings, not text
+     * charsets. A page that declares one would be base64-decoded, entity-
+     * decoded before parsing (turning &lt;script&gt; into markup) or wiped,
+     * so the declaration is ignored with unknown_charset. UTF-7 is refused
+     * as browsers refuse it: it can smuggle markup past byte-level checks.
+     */
+    private const REFUSED = [
+        'base64', 'uuencode', 'qprint', 'quoted-printable', 'html-entities', 'html', '7bit', '8bit', 'pass',
+        'utf-7', 'utf7', 'utf7-imap', 'utf-7-imap', 'auto', 'wchar', 'byte2be', 'byte2le', 'byte4be', 'byte4le',
+    ];
+
+    /**
      * @return array{text: string, charset: string, source: string, warnings: list<Warning>, invalid: int}
      */
     public static function toUtf8(string $bytes, ?string $contentType): array
@@ -61,6 +73,13 @@ final class Charset
         }
         $charset ??= 'utf-8';
         $charset = self::canonical($charset);
+        if (in_array($charset, self::REFUSED, true)) {
+            $warnings[] = Warning::UnknownCharset;
+            $charset = 'utf-8';
+        } elseif (str_starts_with($source, 'meta') && preg_match('/^utf-?(16|32)/', $charset) === 1) {
+            // A meta tag that could be read as ASCII cannot be UTF-16 or UTF-32 (WHATWG: read as UTF-8).
+            $charset = 'utf-8';
+        }
 
         if (
             $source !== 'bom' && in_array($charset, self::LATIN, true) && preg_match('/[\x80-\xFF]/', $bytes) === 1
