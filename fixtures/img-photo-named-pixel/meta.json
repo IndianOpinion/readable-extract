@@ -1,0 +1,12 @@
+{
+    "url": "https://www.img-site.example/tech/phone-launch",
+    "kind": "synthetic",
+    "label": "technology site, English",
+    "pattern": "real photo whose file name contains a placeholder word as a part",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:placeholder-whole-name"
+    ]
+}

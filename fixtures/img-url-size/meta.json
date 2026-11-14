@@ -1,0 +1,12 @@
+{
+    "url": "https://www.img-site.example/cities/url-size-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "og:image advertises a tiny size in its query; numeric id path is not a size",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:furniture-url"
+    ]
+}

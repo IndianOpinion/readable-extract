@@ -1,0 +1,46 @@
+{
+    "name": "indianopinion/readable-extract",
+    "description": "Article extraction for news pages with Indic-script support, honest confidence, a polite opt-in fetcher and a scored fixture suite.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["article", "extraction", "news", "indic", "unicode", "robots.txt"],
+    "homepage": "https://github.com/IndianOpinion/readable-extract",
+    "support": {
+        "issues": "https://github.com/IndianOpinion/readable-extract/issues",
+        "email": "hello@indianopinion.org"
+    },
+    "authors": [
+        {"name": "Indian Opinion", "email": "hello@indianopinion.org"}
+    ],
+    "require": {
+        "php": ">=8.1",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^10.5",
+        "squizlabs/php_codesniffer": "^3.10"
+    },
+    "suggest": {
+        "ext-curl": "Needed only for the default HTTP transport used by the fetcher.",
+        "ext-intl": "Unicode NFC normalisation, IDN hosts and word breaking for scripts without spaces."
+    },
+    "autoload": {
+        "psr-4": {"IndianOpinion\\ReadableExtract\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"IndianOpinion\\ReadableExtract\\Tests\\": "tests/"}
+    },
+    "bin": ["bin/readable-extract"],
+    "scripts": {
+        "test": "phpunit",
+        "stan": "phpstan analyse --no-progress",
+        "cs": "phpcs",
+        "score": "php bin/readable-extract score fixtures"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

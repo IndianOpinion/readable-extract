@@ -1,0 +1,12 @@
+{
+    "url": "https://www.big-portal.example/city/large-page-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "page over 1 MB, most of it a mega menu",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "size:over-1mb"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "url": "https://www.national-daily.example/brand/partner-feature",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "partner content label; page type stays article",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "sponsored"
+    ]
+}

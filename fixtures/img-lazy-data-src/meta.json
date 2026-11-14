@@ -1,0 +1,14 @@
+{
+    "url": "https://www.img-site.example/cities/lazy-image-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "lazy image: spacer in src, real photo in data-src, no og:image",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:lazy",
+        "img:placeholder",
+        "img:first-body"
+    ]
+}

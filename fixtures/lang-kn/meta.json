@@ -1,0 +1,12 @@
+{
+    "url": "https://www.kn-daily.example/city/rain-pumps-2026-11-10-kn",
+    "kind": "synthetic",
+    "label": "regional daily, Kannada",
+    "pattern": "article in kn with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Knda",
+    "layout": "article",
+    "covers": [
+        "lang:kn"
+    ]
+}

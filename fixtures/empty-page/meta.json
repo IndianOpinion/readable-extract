@@ -1,0 +1,12 @@
+{
+    "url": "https://www.national-daily.example/empty",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "whitespace-only response",
+    "date": "2026-11-14",
+    "script": "Zyyy",
+    "layout": "empty",
+    "covers": [
+        "type:empty"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "url": "https://www.img-site.example/cities/srcset-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "srcset with both a 2x and a 1200w candidate",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:srcset"
+    ]
+}

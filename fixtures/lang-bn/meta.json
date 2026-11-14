@@ -1,0 +1,12 @@
+{
+    "url": "https://www.bn-daily.example/city/rain-pumps-2026-11-10-bn",
+    "kind": "synthetic",
+    "label": "regional daily, Bengali",
+    "pattern": "article in bn with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Beng",
+    "layout": "article",
+    "covers": [
+        "lang:bn"
+    ]
+}

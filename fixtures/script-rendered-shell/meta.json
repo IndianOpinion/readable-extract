@@ -1,0 +1,12 @@
+{
+    "url": "https://app.national-daily.example/story/88123",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "single-page app shell with no server-rendered article",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "script_rendered",
+    "covers": [
+        "type:script_rendered"
+    ]
+}

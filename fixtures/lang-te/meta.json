@@ -1,0 +1,12 @@
+{
+    "url": "https://www.te-daily.example/city/rain-pumps-2026-11-10-te",
+    "kind": "synthetic",
+    "label": "regional daily, Telugu",
+    "pattern": "article in te with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Telu",
+    "layout": "article",
+    "covers": [
+        "lang:te"
+    ]
+}

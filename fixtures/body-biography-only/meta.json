@@ -1,0 +1,12 @@
+{
+    "url": "https://www.city-paper.example/city/profile-asha-rao-story",
+    "kind": "synthetic",
+    "label": "city paper, English",
+    "pattern": "only an author biography and no article text anywhere",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "body:biography-only"
+    ]
+}

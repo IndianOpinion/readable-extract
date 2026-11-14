@@ -1,0 +1,12 @@
+{
+    "url": "https://www.pa-daily.example/city/rain-pumps-2026-11-10-pa",
+    "kind": "synthetic",
+    "label": "regional daily, Punjabi",
+    "pattern": "article in pa with JSON-LD, byline and sidebar",
+    "date": "2026-11-14",
+    "script": "Guru",
+    "layout": "article",
+    "covers": [
+        "lang:pa"
+    ]
+}

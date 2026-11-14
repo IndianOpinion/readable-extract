@@ -1,0 +1,12 @@
+{
+    "url": "https://www.old-portal.example/news/2026/11/10/market-hours.html",
+    "kind": "synthetic",
+    "label": "older news portal, English",
+    "pattern": "article text in one div separated by br, no p elements",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "body:div-br"
+    ]
+}

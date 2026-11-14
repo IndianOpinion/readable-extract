@@ -1,0 +1,12 @@
+{
+    "url": "https://www.national-daily.example/cities/home-canonical-fault",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "template fault: canonical points to the home page",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "url:canonical-home"
+    ]
+}

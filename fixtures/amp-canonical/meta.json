@@ -1,0 +1,13 @@
+{
+    "url": "https://www.national-daily.example/amp/cities/metro-fare-review",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "AMP page whose canonical carries tracking parameters and a fragment",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "url:amp",
+        "url:tracking"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/date-visible-slash",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "visible date only: \"Updated: 14/11/2026\"",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:visible-slash"
+    ]
+}

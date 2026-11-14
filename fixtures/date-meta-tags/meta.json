@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/meta-date",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "dates only in article:published_time and article:modified_time",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:meta"
+    ]
+}

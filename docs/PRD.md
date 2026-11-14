@@ -142,7 +142,10 @@ Every numbered item below is a case. Section 12 has one test per case.
 6. Encoding: the extractor decides the character set in this order: a
    byte-order mark, the caller's declared charset (from a `Content-Type`
    header passed in), `<meta charset>`, `<meta http-equiv="Content-Type">`,
-   then UTF-8. Bytes are converted to UTF-8 before parsing. Invalid
+   then UTF-8. Transfer and markup encodings declared as a charset
+   (`base64`, `html-entities`, `qprint`, `uuencode`, `utf-7` and the
+   like) are ignored with warning `unknown_charset`; a meta tag declaring
+   UTF-16 or UTF-32 is read as UTF-8. Bytes are converted to UTF-8 before parsing. Invalid
    sequences are replaced, never dropped silently; warning
    `invalid_encoding` records how many.
 7. A page declared as ISO-8859-1 or windows-1252 that is in fact valid
@@ -220,7 +223,11 @@ Every numbered item below is a case. Section 12 has one test per case.
     `promo`, `sponsor`, `advert`, `widget`, `sidebar`, `breadcrumb`,
     `author-bio`, `profile`, `trending`, `also-read`, `read-more`).
     Hint lists are configurable. The top-scoring container plus qualifying
-    siblings is the visible body.
+    siblings is the visible body. A paragraph inside a container with more
+    negative than positive hints (below the nearest `article`, `main` or
+    `articleBody` element) does not score, so a comment thread or a rail
+    never outscores a short article; when that leaves nothing, the walk
+    runs again without the rule.
 23. Choice: the visible body wins when it meets the prose minimum. If it is
     under the minimum and a structured body (b or c) meets it, the
     structured body wins, with source `structured_data` and warning
@@ -458,10 +465,14 @@ Every numbered item below is a case. Section 12 has one test per case.
 74. Only `http` and `https` on ports 80, 443 or a configured list are
     fetched. A host that resolves to a private, loopback, link-local,
     unique-local, multicast or cloud metadata address is refused
-    (`BlockedAddressException`), checked after DNS resolution and pinned
-    for the request so a rebinding answer cannot slip through. Tests can
-    allow loopback explicitly.
-75. Limits: connect timeout 5 s, total 20 s, body cap 5 MB (the read stops
+    (`BlockedAddressException`), checked after DNS resolution on every
+    hop, robots.txt included. The address is not pinned for the request:
+    the transport resolves again, so a rebinding answer in that gap is not
+    caught; the gap is documented, and callers that need it closed supply
+    a pinning transport or an egress proxy. Tests can allow loopback
+    explicitly.
+75. Limits: connect timeout 5 s, total 20 s for the whole `fetch()` across
+    every hop and robots.txt read, body cap 5 MB (the read stops
     there, warning `body_truncated`). A content type other than
     `text/html` or `application/xhtml+xml` raises `FetchException` with
     reason `unexpected_content_type`.
@@ -469,7 +480,9 @@ Every numbered item below is a case. Section 12 has one test per case.
     `5xx` other than `503` with `Retry-After` does the same. Network,
     DNS and TLS failures raise `NetworkException`. Nothing is swallowed.
 77. Cookies are not stored or sent. No `Authorization` header is sent
-    unless the caller passes one for its own licensed source.
+    unless the caller passes one for its own licensed source, and then
+    only to the scheme, host and port of the URL the caller asked for:
+    never across a redirect to another origin or from https to http.
 78. The fetched result carries final URL, status, headers, charset, body,
     robots directives and the hop list, and can be passed straight to
     `extract()`.
@@ -754,7 +767,8 @@ a scripted transport and a stub DNS resolver.
 21. (21) A page with all three candidates records each length in the
     trace.
 22. (22) A related-stories block with high link density loses to the
-    article block; danda-heavy Hindi prose scores as prose.
+    article block; danda-heavy Hindi prose scores as prose; a comment
+    thread longer than the article neither wins nor joins the body.
 23. (23) Visible body of 150 chars plus a 2,000-char JSON-LD body: JSON-LD
     wins, warning `visible_body_short`.
 24. (24) An author biography first in markup with a JSON-LD body: body is

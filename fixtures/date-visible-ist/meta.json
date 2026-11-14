@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/date-visible-ist",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "visible date only: \"14 Nov 2026, 10:30 IST\"",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:visible-dmy-ist"
+    ]
+}

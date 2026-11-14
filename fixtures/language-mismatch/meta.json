@@ -1,0 +1,12 @@
+{
+    "url": "https://www.hi-daily.example/desh/lang-mismatch",
+    "kind": "synthetic",
+    "label": "regional daily, Hindi",
+    "pattern": "lang=\"en\" declared on a Hindi article",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "article",
+    "covers": [
+        "lang:mismatch"
+    ]
+}

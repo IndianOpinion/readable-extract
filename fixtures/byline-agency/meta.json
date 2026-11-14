@@ -1,0 +1,12 @@
+{
+    "url": "https://www.wire-site.example/nation/wire-copy",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "desk and wire credits in a visible byline",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "byline:agency"
+    ]
+}

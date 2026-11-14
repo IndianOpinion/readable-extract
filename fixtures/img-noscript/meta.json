@@ -1,0 +1,12 @@
+{
+    "url": "https://www.img-site.example/cities/noscript-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "data URI placeholder with the real image only inside noscript",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:noscript"
+    ]
+}

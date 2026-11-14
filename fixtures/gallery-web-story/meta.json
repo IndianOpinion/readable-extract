@@ -1,0 +1,14 @@
+{
+    "url": "https://www.hi-daily.example/web-stories/winter-food-guide",
+    "kind": "synthetic",
+    "label": "regional daily, Hindi",
+    "pattern": "web story known by its /web-stories/ path",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "gallery",
+    "covers": [
+        "type:gallery",
+        "path-hint",
+        "lang:hi"
+    ]
+}

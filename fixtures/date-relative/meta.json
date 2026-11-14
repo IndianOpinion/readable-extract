@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/relative",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "relative visible date and no reference time",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:relative"
+    ]
+}

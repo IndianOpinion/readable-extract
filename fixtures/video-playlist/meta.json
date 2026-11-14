@@ -1,0 +1,12 @@
+{
+    "url": "https://www.tv-news.example/videos/playlist/evening-bulletin",
+    "kind": "synthetic",
+    "label": "television news site, English",
+    "pattern": "video playlist page whose text is whichever card is on screen",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "video",
+    "covers": [
+        "type:video"
+    ]
+}

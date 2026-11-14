@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/undated",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "no date anywhere; must stay null, never today",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:none"
+    ]
+}

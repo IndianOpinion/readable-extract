@@ -1,0 +1,13 @@
+{
+    "url": "https://www.img-site.example/cities/og-spacer-story",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "og:image is a spacer; JSON-LD image list with sizes",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "img:og-spacer",
+        "img:json-ld-largest"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "url": "https://www.tv-news.example/video/city/flyover-opening-1182",
+    "kind": "synthetic",
+    "label": "television news site, English",
+    "pattern": "video page known only by its /video/ path; og:type says article",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "video",
+    "covers": [
+        "type:video",
+        "path-hint"
+    ]
+}

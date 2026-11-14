@@ -1,0 +1,12 @@
+{
+    "url": "https://www.national-daily.example/photos/festival-of-lights-in-pictures",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "photo gallery with ImageGallery JSON-LD and captions",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "gallery",
+    "covers": [
+        "type:gallery"
+    ]
+}

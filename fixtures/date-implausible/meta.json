@@ -1,0 +1,12 @@
+{
+    "url": "https://www.date-site.example/news/implausible",
+    "kind": "synthetic",
+    "label": "news portal, English",
+    "pattern": "published date in 2031 and a 1970 fallback, both rejected",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "article",
+    "covers": [
+        "date:implausible"
+    ]
+}

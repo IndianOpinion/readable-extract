@@ -1,0 +1,13 @@
+{
+    "url": "https://www.national-daily.example/india/",
+    "kind": "synthetic",
+    "label": "national daily, English",
+    "pattern": "section front with forty headline links and no structured data",
+    "date": "2026-11-14",
+    "script": "Latn",
+    "layout": "index",
+    "covers": [
+        "type:index",
+        "date:none"
+    ]
+}

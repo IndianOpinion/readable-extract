@@ -1,0 +1,13 @@
+{
+    "url": "https://www.hi-daily.example/rajya/do-lekhak",
+    "kind": "synthetic",
+    "label": "regional daily, Hindi",
+    "pattern": "Hindi byline joined with aur",
+    "date": "2026-11-14",
+    "script": "Deva",
+    "layout": "article",
+    "covers": [
+        "byline:hindi",
+        "lang:hi"
+    ]
+}
