@@ -211,6 +211,10 @@ Today all 56 fixtures pass with mean body F1 1.0. The fixtures were written with
 
 **WordPress?** Call it from your import hook with the HTML you already have and pass your site's host to `withOwnHosts()`. See `examples/wordpress-import-hook.php`.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to report issues, add fixtures and send changes.
+
 ## Licence
 
 MIT. Copyright (c) 2026 Indian Opinion. See `LICENSE`.
